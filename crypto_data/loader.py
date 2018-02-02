@@ -5,7 +5,8 @@ import numpy as np
 
 def load(path, indicators=None):
     ret = pd.read_csv(path)
-    for indicator in indicators: add_indicator(ret, indicator['name'], indicator['options'])
+    if indicators is not None:
+        for indicator in indicators: add_indicator(ret, indicator['name'], indicator['options'])
     return ret
 
 

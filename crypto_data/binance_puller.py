@@ -40,4 +40,5 @@ def pull_currency_candles(symbol: str, period: int, interval: str, name: str, pa
     pretty_end = datetime.fromtimestamp(end_time / 1000).strftime('%Y-%m-%d')
 
     df = pd.DataFrame(candles, columns=CANDLE_COLUMNS)
+    df.set_index('open_time', inplace=True)
     df.to_csv(f'{path}/{symbol}_{name}_{interval}_{pretty_start}-{pretty_end}.csv')

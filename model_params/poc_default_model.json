@@ -1,0 +1,132 @@
+{
+  "loading": {
+    "indicators": [
+      {
+        "name": "macd",
+        "options": {
+          "short_period": 12,
+          "long_period": 26,
+          "signal_period": 9
+        }
+      },
+      {
+        "name": "ema",
+        "options": {
+          "period": 7
+        }
+      },
+      {
+        "name": "ema",
+        "options": {
+          "period": 25
+        }
+      },
+      {
+        "name": "ema",
+        "options": {
+          "period": 99
+        }
+      },
+      {
+        "name": "sma",
+        "options": {
+          "period": 7
+        }
+      },
+      {
+        "name": "sma",
+        "options": {
+          "period": 25
+        }
+      },
+      {
+        "name": "sma",
+        "options": {
+          "period": 99
+        }
+      },
+      {
+        "name": "bbands",
+        "options": {
+          "period": 21,
+          "stddev": 2
+        }
+      },
+      {
+        "name": "stoch",
+        "options": {
+          "pct_k_period": 20,
+          "pct_k_slowing_period": 5,
+          "pct_d_period": 5
+        }
+      },
+      {
+        "name": "adx",
+        "options": {
+          "period": 14
+        }
+      },
+      {
+        "name": "rsi",
+        "options": {
+          "period": 14
+        }
+      },
+      {
+        "name": "cmo",
+        "options": {
+          "period": 14
+        }
+      },
+      {
+        "name": "cci",
+        "options": {
+          "period": 14
+        }
+      },
+      {
+        "name": "atr",
+        "options": {
+          "period": 14
+        }
+      },
+      {
+        "name": "mfi",
+        "options": {
+          "period": 14
+        }
+      },
+      {
+        "name": "psar",
+        "options": {
+          "acceleration_factor_step": 0.02,
+          "acceleration_factor_maximum": 0.2
+        }
+      },
+      {
+        "name": "roc",
+        "options": {
+          "period": 14
+        }
+      }
+    ]
+  },
+  "batching": {
+    "window_size": 60,
+    "label_column": "close",
+    "ignore_columns": [
+      "open_time",
+      "close_time",
+      "ignore"
+    ]
+  },
+  "model": {
+    "cell_size": 128,
+    "optimizer": "adam",
+    "lossf": "categorical_crossentropy",
+    "activation": "softmax"
+  },
+  "training": {
+    "batch_size": 400
+  }
+}

@@ -31,7 +31,7 @@ def main(model_params, files):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Train model.')
-    parser.add_argument('--data', type=str, default='data\\*\\*[15m]*.csv', help='File or file wildcard for all data files')
+    parser.add_argument('--data', type=str, default='data\\*\\*15m*.csv', help='File or file wildcard for all data files')
     parser.add_argument('--model', type=str, default=None, help='Name of model configuration yu would like to use')
     args = parser.parse_args()
 

@@ -127,6 +127,6 @@
     "activation": "softmax"
   },
   "training": {
-    "batch_size": 400
+    "batch_size": 200
   }
 }

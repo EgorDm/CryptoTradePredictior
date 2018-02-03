@@ -16,8 +16,10 @@ def main(model_params, files):
     for file in files:
         df = load(file, **model_params['loading'])
         file_batches = create_batches(df, **model_params['batching'])
+
         if batch_data is None: batch_data = file_batches
-        else: batch_data = (np.append(batch_data[i], file_batches[i], axis=0) for i in range(len(batch_data)))
+        else: batch_data = tuple(np.append(batch_data[i], file_batches[i], axis=0) for i in range(len(batch_data)))
+
     X_train, Y_train, X_test, Y_test = batch_data
     print(X_train.shape)
 
@@ -28,7 +30,7 @@ def main(model_params, files):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser = argparse.ArgumentParser(description='Train model.')
     parser.add_argument('--data', type=str, default='data\\*\\*[15m]*.csv', help='File or file wildcard for all data files')
     parser.add_argument('--model', type=str, default=None, help='Name of model configuration yu would like to use')
     args = parser.parse_args()

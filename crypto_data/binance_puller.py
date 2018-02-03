@@ -7,6 +7,8 @@ from binance.enums import KLINE_INTERVAL_15MINUTE, KLINE_INTERVAL_5MINUTE, KLINE
 from tqdm import tqdm
 import pandas as pd
 
+tqdm.monitor_interval = 0
+
 INTERVALS = {KLINE_INTERVAL_15MINUTE: 'mid', KLINE_INTERVAL_5MINUTE: 'short', KLINE_INTERVAL_1HOUR: 'long'}
 INTERVAL_TIME = {
     KLINE_INTERVAL_15MINUTE: 15 * 60,

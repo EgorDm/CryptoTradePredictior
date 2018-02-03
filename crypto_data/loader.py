@@ -5,16 +5,16 @@ import numpy as np
 
 def load(path, indicators=None):
     ret = pd.read_csv(path)
-    if indicators is not None:
-        for indicator in indicators: add_indicator(ret, indicator['name'], indicator['options'])
+    if indicators is not None: indicator_cols = [add_indicator(ret, indicator['name'], indicator['options']) for indicator in indicators]
+    # Make sure thet we start data at non zeros which moving averages tend to produce
+    ret = ret.loc[ret[(ret != 0).all(axis=1)].first_valid_index():]  # (ret != 0).all(axis=1)
+
     return ret
 
 
 def translate_fields(inputs):
-    ret = ['close']
-    if len(inputs) == 1: return ret
-    # TODO: add more
-    return ret
+    if len(inputs) == 1: return ['close']
+    return inputs
 
 
 def add_indicator(frame, indicator, options):
@@ -28,3 +28,5 @@ def add_indicator(frame, indicator, options):
         identifier = f'{outputs[i]}_{"_".join([str(v) for v in options.values()])}'
         series = ret[i] if len(outputs) > 1 else ret
         frame[identifier] = np.append(np.zeros([inputs.shape[1] - len(series)]), series)
+
+    return identifier

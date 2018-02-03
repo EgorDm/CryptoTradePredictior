@@ -14,8 +14,9 @@ def generate_label(recent_label, future_label):  # TODO: use fees/treshhold for 
     return utils.one_hot(LABEL_SHORT, LABEL_COUNT)
 
 
-def create_batches(data_frame: pd.DataFrame, data_columns: list, label_column: str, window_size: int, future_offset_factor: float = 0.1,
+def create_batches(data_frame: pd.DataFrame, ignore_columns: list, label_column: str, window_size: int, future_offset_factor: float = 0.1,
                    train_size: float = 0.9) -> tuple:
+    data_columns = sorted(list(set(data_frame.columns) - set(ignore_columns + [label_column])))
     data = np.array([data_frame[column].replace(to_replace=0, method='ffill').values for column in data_columns + [label_column]]).transpose((1, 0))
     future_offset = int(round(window_size * future_offset_factor))
 

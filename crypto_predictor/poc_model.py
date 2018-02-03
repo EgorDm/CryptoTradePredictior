@@ -18,7 +18,7 @@ class POCModel(BaseModel):
         model.add(Dense(units=outputs))
         model.add(Activation(activation))
 
-        model.compile(loss=lossf, optimizer=optimizer)
+        model.compile(loss=lossf, optimizer=optimizer, metrics=['accuracy'])
         return model
 
     def _process_labels(self, labels) -> np.ndarray: return np.argmax(labels, axis=1)

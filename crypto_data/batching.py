@@ -15,7 +15,7 @@ def generate_label(recent_label, future_label):  # TODO: use fees/treshhold for 
 
 
 def create_batches(data_frame: pd.DataFrame, ignore_columns: list, label_column: str, window_size: int, future_offset_factor: float = 0.1,
-                   train_size: float = 0.9) -> tuple:
+                   train_size: float = 0.95) -> tuple:
     data_columns = sorted(list(set(data_frame.columns) - set(ignore_columns + [label_column])))
     data = np.array([data_frame[column].replace(to_replace=0, method='ffill').values for column in data_columns + [label_column]]).transpose((1, 0))
     future_offset = int(round(window_size * future_offset_factor))
@@ -24,7 +24,6 @@ def create_batches(data_frame: pd.DataFrame, ignore_columns: list, label_column:
     batches = np.array([np.append(data[i:i + window_size], [data[i + window_size + future_offset]], axis=0)
                         for i in range(len(data) - (window_size + future_offset))])
 
-    np.random.shuffle(batches)  # Shuffle data
     batches = normalize_windows(batches)  # Normalize data
     split_index = int(round(train_size * batches.shape[0]))  # Splitting data position
 
@@ -32,8 +31,10 @@ def create_batches(data_frame: pd.DataFrame, ignore_columns: list, label_column:
     X = batches[:, :-1, :]  # Everything but the last
     Y = np.array([generate_label(batch[-2, -1], batch[-1, -1]) for batch in batches])
 
-    # Training data
-    X_train, Y_train = X[:split_index], Y[:split_index]
+    # Training data w/ shuffling
+    s_order = np.arange(split_index)
+    np.random.shuffle(s_order)
+    X_train, Y_train = X[:split_index][s_order], Y[:split_index][s_order]
 
     # Testing data
     X_test, Y_test = X[split_index:], Y[split_index:]
